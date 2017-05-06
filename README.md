@@ -13,6 +13,7 @@ These scripts all achieve the same thing, using either FFmpeg or VLC. The FFmpeg
 
   * FFmpeg - opengl gave the best performance under X11.
   * VLC - does not capture the mouse.
+  * Does not support Wayland.
 
 ## Usage
 Edit the scripts as required.
