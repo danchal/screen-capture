@@ -7,17 +7,19 @@
 
 
 ## Description
-These scripts allow the screen capture of a defined region of a desktop, outputing to a new window.
+This script allows the screen capture of a defined region of a desktop, outputing to a new window which can then be shared independantly.
 
-These scripts all achieve the same thing, using either FFmpeg or VLC. The FFmpeg has three flavours using different output devices, opengl, vx or sdl. Choose whichever gives the best performance on your setup.
+The script takes a single optional parameter to set the output device; [OpenGl, SDL or XV]. OpenGl is the default option. Choose whichever gives the best performance on your setup.
 
-  * FFmpeg - opengl gave the best performance under X11.
-  * VLC - does not capture the mouse.
-  * Does not support Wayland.
+    * Does not support Wayland.
+    * SDL had no window border (by choice)
 
 ## Usage
-Edit the scripts as required.
+Edit the scrip as required.
 
   * set your viewport top left, e.g. 0,0
   * set your viewport size, e.g. 1280x1080
 
+```
+$ screen-capture [ opengl | sdl | xv ]
+```
