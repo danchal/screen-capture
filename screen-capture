@@ -19,7 +19,7 @@ case "$1" in
         ;;
 esac
 
-ffmpeg \
+comm_ffmpeg="ffmpeg \
     -f x11grab \
     -draw_mouse 1 \
     -framerate 2 \
@@ -29,19 +29,26 @@ ffmpeg \
     -i ${DISPLAY} \
     -pix_fmt ${pix_fmt} \
     -window_borderless true \
-    -f ${out_typ} "'ffmpeg screen capture: ${out_typ}'" \
+    -f ${out_typ} \"ffmpeg screen capture: ${out_typ}\" \
     -nostdin \
     -nostats \
-    -loglevel 8 </dev/null >/dev/null 2>&1 &
+    -loglevel 8 </dev/null"
+
+eval "${comm_ffmpeg} >/dev/null 2>&1 &"
+this_pid=$!
+
+#echo "this_pid<${this_pid}>"
+#echo "${comm_ffmpeg}"
 
 sleep 1
 
-process_pid=$(ps -C ffmpeg -o pid --no-heading)
+process_pid=$(ps -C ffmpeg -o pid -p ${this_pid} --no-heading)
 
-if [ $process_pid ]; then 
+if [ "$process_pid" ]; then 
     echo "Started ffmpeg Capture. PID: $process_pid"
 else
-    echo "Error: Not started" >&2
+    echo "Error: Not started. Command run:" >&2
+    echo "${comm_ffmpeg}" >&2
     exit 1
 fi
 
