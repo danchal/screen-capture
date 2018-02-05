@@ -42,7 +42,7 @@ this_pid=$!
 
 sleep 1
 
-process_pid=$(ps -C ffmpeg -o pid -p ${this_pid} --no-heading)
+process_pid=$(ps -o pid -p ${this_pid} --no-heading)
 
 if [ "$process_pid" ]; then 
     echo "Started ffmpeg Capture. PID: $process_pid"
