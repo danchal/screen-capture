@@ -1,17 +1,32 @@
 #!/bin/bash
+video_size="$1"
+
+if [[ -z "$video_size" ]]; then 
+    video_size="1280x1080"
+    echo "usage: $0 [video size AxB] [output type xv | sdl | caca | opengl]"
+fi
+
 if [[ -z "$DISPLAY" ]]; then
     echo "Error: \$DISPLAY not set, is Xorg in use?" >&2
     exit 1
 fi
 
-case "$1" in
+case "$2" in
     xv)
         out_typ="xv"
         pix_fmt="yuv420p"
         ;;
     sdl)
+        out_typ="sdl2"
+        pix_fmt="bgr0"
+        ;;
+    sdl1)
         out_typ="sdl"
         pix_fmt="bgr0"
+        ;;
+    caca)
+        out_typ="caca"
+        pix_fmt="rgb24"
         ;;
     *)
         out_typ="opengl"
@@ -25,7 +40,7 @@ comm_ffmpeg="ffmpeg \
     -framerate 2 \
     -grab_x 0 \
     -grab_y 0 \
-    -video_size 1280x1080 \
+    -video_size ${video_size} \
     -i ${DISPLAY} \
     -pix_fmt ${pix_fmt} \
     -window_borderless true \
